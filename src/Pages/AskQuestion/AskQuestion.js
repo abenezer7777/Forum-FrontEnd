@@ -28,9 +28,11 @@ export default function AskQuestion() {
   useEffect(() => {
     if (!userData.user) navigate("/login");
 
-    axios.get("http://localhost:4000/api/questions").then((response) => {
-      setAllQuestions(response.data.data);
-    });
+    axios
+      .get(`${process.env.REACT_APP_base_url}/api/questions`)
+      .then((response) => {
+        setAllQuestions(response.data.data);
+      });
 
     Questions();
   }, [userData.user, navigate]);
@@ -49,7 +51,7 @@ export default function AskQuestion() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:4000/api/questions", {
+      await axios.post(`${process.env.REACT_APP_base_url}/api/questions`, {
         id: userData.user.id,
         question: form.question,
         questionDescription: form.questionDescription,
